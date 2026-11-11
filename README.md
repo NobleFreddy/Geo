@@ -34,9 +34,16 @@ js/tausendfuessler.js   der Tausendfüßler und welche Beine (Branchen) wann wac
 js/interaktionen.js     Wackeltest, Wirkungsgefüge, Grubenlampe, Bergsenkung, Zeitstrahl, Karten, Schieber, Waage
 ```
 
+## Leitfrage-Abschnitt
+
+Der Abschnitt `id="leitfrage"` in `index.html` besteht aus drei Teilen:
+
+1. **Standort-Check** – Argument-Waage mit unseren Stärken und Schwächen. `data-side="pro"` bzw. `"contra"` an jedem `<li class="arg">` legt fest, wohin der Knopf „Unsere Einordnung zeigen“ das Argument legt.
+2. **Chance: KI-Infrastruktur** – Puzzle aus Flüssen, Start-ups, Bildungslandschaft und Brachflächen. Ist es vollständig, bekommt der Tausendfüßler ein gestricheltes „Zukunftsbein“.
+3. **Unser Urteil** – Ampel („bedingt zukunftsfähig“), Feld für das eigene Urteil und unser Fazit als Fließtext.
+
 ## Noch zu ergänzen
 
-- **Leitfrage-Abschnitt** (`id="leitfrage"` in `index.html`): Die Argumente der Waage sind vorläufig aus der Bilanz übernommen. Neue Argumente als weiteres `<li class="arg" data-id="…">` in die Liste `argPool` eintragen; „Unser Urteil“ steht im Kasten `platzhalter`.
 - **Begriffe ohne Erklärung** (in der Fußzeile, `<dl id="glossar">`): Shrinking Cities, Emscherzone, Altlasten, Physiognomie, Revitalisierung. Zum Ergänzen den Text im `<dd>` ersetzen und `class="is-luecke"` entfernen.
 - **Fußzeile**: Namen, Kurs, Schuljahr und Quellen eintragen.
 

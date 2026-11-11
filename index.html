@@ -837,15 +837,16 @@
 </section>
 
 <!-- =========================================================
-     LEITFRAGE – Argument-Waage
-     (Argumente sind vorläufig aus der Bilanz übernommen)
+     LEITFRAGE – Standort-Check, KI-Chance und Urteil
      ========================================================= -->
 <section class="station station--light" id="leitfrage" data-depth="-0.1" data-dir="up" data-short="Leitfrage" data-title="Leitfrage · Zukunftsfähig?">
   <div class="slide">
     <p class="kicker kicker--up">Blick nach vorn</p>
     <h2>Zukunftsfähiger Wirtschaftsraum?</h2>
     <p class="lead"><strong>Leitfrage:</strong> Inwiefern kann das Ruhrgebiet als zukunftsfähiger Wirtschaftsraum bezeichnet werden?</p>
-    <div class="vorlaeufig"><b>Vorläufig:</b><span>Die Argumente stammen aus unserer Bilanz. Unsere Ergebnisse zur Leitfrage werden hier noch ergänzt.</span></div>
+
+    <h3>Standort-Check: Stärken und Schwächen</h3>
+    <p>Wie würdest du die Argumente gewichten? Lege sie in die Waagschalen – oder lass dir unsere Einordnung zeigen.</p>
 
     <div class="waage" id="waage">
       <svg class="waage__svg" id="waageSvg" viewBox="0 0 640 300" role="img" aria-labelledby="waageTitle">
@@ -858,13 +859,13 @@
             <path d="M110 84 L58 190 M110 84 L162 190" stroke="#3d3530" stroke-width="2"/>
             <g id="panPro"></g>
             <path d="M46 190 H174 Q164 224 110 224 Q56 224 46 190 Z" fill="#2f7a4d"/>
-            <text x="110" y="250" text-anchor="middle" font-size="16" font-weight="700" fill="#2f7a4d" font-family="Bahnschrift, Arial, sans-serif">spricht dafür</text>
+            <text x="110" y="250" text-anchor="middle" font-size="16" font-weight="700" fill="#2f7a4d" font-family="Bahnschrift, Arial, sans-serif">Stärken</text>
           </g>
           <g class="waage__pan waage__pan--r">
             <path d="M530 84 L478 190 M530 84 L582 190" stroke="#3d3530" stroke-width="2"/>
             <g id="panContra"></g>
             <path d="M466 190 H594 Q584 224 530 224 Q476 224 466 190 Z" fill="#b0412c"/>
-            <text x="530" y="250" text-anchor="middle" font-size="16" font-weight="700" fill="#b0412c" font-family="Bahnschrift, Arial, sans-serif">spricht dagegen</text>
+            <text x="530" y="250" text-anchor="middle" font-size="16" font-weight="700" fill="#b0412c" font-family="Bahnschrift, Arial, sans-serif">Schwächen</text>
           </g>
         </g>
         <circle cx="320" cy="84" r="11" fill="#c8612b"/>
@@ -872,37 +873,106 @@
       <p class="waage__result" id="waageResult" aria-live="polite">Lege die Argumente in die Waagschalen.</p>
 
       <div class="zones">
-        <div class="zone zone--pro" data-zone="pro"><h4>✔ spricht dafür</h4><ul class="arglist" id="zonePro"></ul></div>
-        <div class="zone zone--contra" data-zone="contra"><h4>✖ spricht dagegen</h4><ul class="arglist" id="zoneContra"></ul></div>
+        <div class="zone zone--pro" data-zone="pro"><h4>✔ Stärke – spricht dafür</h4><ul class="arglist" id="zonePro"></ul></div>
+        <div class="zone zone--contra" data-zone="contra"><h4>✖ Schwäche – spricht dagegen</h4><ul class="arglist" id="zoneContra"></ul></div>
       </div>
 
       <div class="pool" data-zone="pool">
         <h4>Argumente <span class="muted">(ziehen oder Knopf antippen)</span></h4>
+        <!-- data-side = unsere Einordnung (pro = Stärke, contra = Schwäche) -->
         <ul class="arglist" id="argPool">
-          <li class="arg" data-id="a1"><span>Neue Branchen (IT, Logistik, Dienstleistungen, Technologie) verringern die Abhängigkeit von Kohle und Stahl</span></li>
-          <li class="arg" data-id="a7"><span>Weiterhin hohe Arbeitslosigkeit</span></li>
-          <li class="arg" data-id="a3"><span>Eine der dichtesten Forschungsregionen Europas – Wirtschaft und Wissenschaft sind eng verknüpft</span></li>
-          <li class="arg" data-id="a9"><span>Wirtschaftliche Unterschiede zwischen den Städten</span></li>
-          <li class="arg" data-id="a2"><span>Neue Arbeitsplätze in Gewerbeparks, Universitäten und Technologiezentren</span></li>
-          <li class="arg" data-id="a10"><span>Altlasten und Bergsenkungen bestehen teilweise weiter</span></li>
-          <li class="arg" data-id="a4"><span>Ehemalige Industrieflächen sind heute Freizeit-, Kultur- und Erholungsgebiete</span></li>
-          <li class="arg" data-id="a8"><span>Soziale Ungleichheit</span></li>
-          <li class="arg" data-id="a5"><span>Ausgebaute Verkehrswege und Bildungseinrichtungen</span></li>
-          <li class="arg" data-id="a11"><span>Der Strukturwandel ist ein langfristiger Prozess und noch nicht abgeschlossen</span></li>
-          <li class="arg" data-id="a6"><span>Vom Zweibeiner zum Tausendfüßler: viele wirtschaftliche Standbeine</span></li>
+          <li class="arg" data-id="s1" data-side="pro"><span>🏗️ Revitalisierte Brachflächen sowie Wohn-, Bau- und Stadtkonzepte verbessern die Standortattraktivität</span></li>
+          <li class="arg" data-id="w1" data-side="contra"><span>💶 Unterdurchschnittliche Kaufkraft</span></li>
+          <li class="arg" data-id="s2" data-side="pro"><span>🚀 Start-up-freundlich: günstige Brachflächen, stark ausgeprägter tertiärer Sektor und gut ausgebaute Bildungslandschaft</span></li>
+          <li class="arg" data-id="w2" data-side="contra"><span>📉 Deindustrialisierung – in Deutschland unter anderem wegen einer immer schlechteren Position im internationalen Vergleich</span></li>
+          <li class="arg" data-id="s3" data-side="pro"><span>🛣️ Infrastruktur mit hervorragenden Grundlagen – ihr volles Potenzial wird derzeit aber nicht ganz genutzt</span></li>
+          <li class="arg" data-id="w3" data-side="contra"><span>💸 Wegen intensiver Förderungen war und ist das Ruhrgebiet ein sehr kostenintensiver Wirtschaftsraum</span></li>
+          <li class="arg" data-id="s4" data-side="pro"><span>🌊 Flüsse als bedeutender Standortfaktor, insbesondere für Rechenzentren</span></li>
+          <li class="arg" data-id="w4" data-side="contra"><span>⚙️ Der Maschinenbau in Deutschland steckt im vierten Krisenjahr (Branchengipfel Berlin, November 2026)</span></li>
+          <li class="arg" data-id="s5" data-side="pro"><span>🏭 Interessante Industriekultur für den Tourismus</span></li>
         </ul>
-        <p style="margin:12px 0 0"><button class="btn btn--small" id="waageReset">↺ Waage leeren</button></p>
-      </div>
-
-      <label class="urteil-feld"><strong>Mein Urteil zur Leitfrage</strong>
-        <textarea id="meinUrteil" placeholder="Das Ruhrgebiet kann … als zukunftsfähiger Wirtschaftsraum bezeichnet werden, weil …"></textarea>
-      </label>
-
-      <div class="platzhalter">
-        <h3>Unser Urteil</h3>
-        <p style="margin:0">Folgt – hier kommt unser Ergebnis zur Leitfrage hin.</p>
+        <p class="wackel__ctrl" style="margin:12px 0 0">
+          <button class="btn btn--small btn--lampe" id="waageOurs">Unsere Einordnung zeigen</button>
+          <button class="btn btn--small" id="waageReset">↺ Waage leeren</button>
+        </p>
       </div>
     </div>
+  </div>
+
+  <div class="slide">
+    <h3>Chance: KI-Infrastruktur und Rechenzentren</h3>
+    <div class="grid grid--2">
+      <div class="card"><span class="tag tag--rot">Problem</span><p style="margin:.5em 0 0">Laut dem Branchengipfel in Berlin im November 2026 befindet sich der Maschinenbau in Deutschland in seinem <strong>vierten Krisenjahr</strong>.</p></div>
+      <div class="card"><span class="tag tag--wirtschaft">Ausweg?</span><p style="margin:.5em 0 0">Ein <strong>Ausbau der KI-Infrastruktur</strong> könne dabei helfen, aus der Krise herauszukommen.</p></div>
+    </div>
+    <p class="lead" style="margin-top:22px">Hier könnte das Ruhrgebiet ansetzen. Setze die vier Bausteine zusammen!</p>
+
+    <div class="puzzle" id="puzzle">
+      <div class="puzzle__slot" data-slot="fluesse"><span class="puzzle__ph" aria-hidden="true">?</span><div class="puzzle__fill"><b>🌊 Flüsse</b><small>positiver und bedeutender Standortfaktor für Rechenzentren</small></div></div>
+      <div class="puzzle__slot" data-slot="startups"><span class="puzzle__ph" aria-hidden="true">?</span><div class="puzzle__fill"><b>🚀 Start-ups</b><small>eine start-up-freundliche Region</small></div></div>
+      <div class="puzzle__core" id="puzzleCore">
+        <svg class="puzzle__icon" viewBox="0 0 80 90" aria-hidden="true">
+          <g fill="none" stroke="currentColor" stroke-width="4"><rect x="10" y="6" width="60" height="22" rx="4"/><rect x="10" y="34" width="60" height="22" rx="4"/><rect x="10" y="62" width="60" height="22" rx="4"/></g>
+          <g fill="currentColor"><circle cx="22" cy="17" r="3.5"/><circle cx="22" cy="45" r="3.5"/><circle cx="22" cy="73" r="3.5"/></g>
+          <path d="M34 17 H60 M34 45 H60 M34 73 H60" stroke="currentColor" stroke-width="3" stroke-dasharray="5 4"/>
+        </svg>
+        <b>Rechenzentren</b>
+        <span>KI-Infrastruktur</span>
+        <small id="puzzleCount">0 / 4 Bausteine</small>
+      </div>
+      <div class="puzzle__slot" data-slot="bildung"><span class="puzzle__ph" aria-hidden="true">?</span><div class="puzzle__fill"><b>🎓 Bildungslandschaft</b><small>gut ausgebaut</small></div></div>
+      <div class="puzzle__slot" data-slot="brachen"><span class="puzzle__ph" aria-hidden="true">?</span><div class="puzzle__fill"><b>🏗️ Brachflächen</b><small>günstig verfügbar</small></div></div>
+    </div>
+    <div class="puzzle__tray" id="puzzleTray" role="group" aria-label="Bausteine">
+      <button class="btn" data-piece="fluesse">🌊 Flüsse</button>
+      <button class="btn" data-piece="startups">🚀 Start-ups</button>
+      <button class="btn" data-piece="bildung">🎓 Bildungslandschaft</button>
+      <button class="btn" data-piece="brachen">🏗️ Brachflächen</button>
+      <button class="btn btn--small" id="puzzleReset" hidden>↺ Neu legen</button>
+    </div>
+    <p class="puzzle__msg" id="puzzleMsg" aria-live="polite"></p>
+  </div>
+
+  <div class="slide">
+    <h3>Unser Urteil</h3>
+    <div class="urteil-grid">
+      <div class="card ampel-card">
+        <div class="ampel" id="ampel">
+          <div class="ampel__box" aria-hidden="true">
+            <span class="ampel__light ampel__light--rot"></span>
+            <span class="ampel__light ampel__light--gelb"></span>
+            <span class="ampel__light ampel__light--gruen"></span>
+          </div>
+          <ul class="ampel__labels">
+            <li data-l="rot">nicht zukunftsfähig</li>
+            <li data-l="gelb">bedingt zukunftsfähig</li>
+            <li data-l="gruen">zukunftsfähig</li>
+          </ul>
+        </div>
+        <button class="btn btn--lampe" id="ampelBtn">Urteil aufdecken</button>
+      </div>
+      <div class="stack">
+        <label class="urteil-feld"><strong>Erst selbst urteilen:</strong> Wie zukunftsfähig ist das Ruhrgebiet?
+          <textarea id="meinUrteil" placeholder="Das Ruhrgebiet kann … als zukunftsfähiger Wirtschaftsraum bezeichnet werden, weil …"></textarea>
+        </label>
+        <div class="urteil" id="unserUrteil" hidden>
+          <h3>Bedingt zukunftsfähig</h3>
+          <p>Das Ruhrgebiet kann lediglich <strong>bedingt</strong> als zukunftsfähiger Wirtschaftsraum bezeichnet werden.</p>
+          <ul class="urteil__list">
+            <li><b>✔ Stärken:</b> revitalisierte Brachflächen, Wohn-, Bau- und Stadtkonzepte, start-up-freundlich, starker tertiärer Sektor, gute Bildungslandschaft, Infrastruktur, Flüsse, Industriekultur</li>
+            <li><b>✖ Schwächen:</b> unterdurchschnittliche Kaufkraft, Deindustrialisierung, hohe Kosten durch intensive Förderungen, Krise im Maschinenbau</li>
+            <li><b>➜ Chance:</b> Ausbau von KI-Infrastruktur und Rechenzentren</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <details class="fazit-text">
+      <summary>Unser Fazit als Fließtext</summary>
+      <p>Das Ruhrgebiet kann lediglich bedingt als zukunftsfähiger Wirtschaftsraum bezeichnet werden.</p>
+      <p>Zu den wirtschaftlichen Stärken des Ruhrgebiets zählen revitalisierte Brachflächen sowie Wohn-, Bau- und Stadtkonzepte, die die Standortattraktivität des Raumes verbessern. Außerdem ist die Region start-up-freundlich, da es günstige Brachflächen gibt, der tertiäre Sektor stark ausgeprägt und die Bildungslandschaft gut ausgebaut ist. Die Infrastruktur bietet hervorragende Grundlagen, deren volles Potenzial angesichts der aktuellen Umstände jedoch nicht ganz genutzt wird. So wären die Flüsse insbesondere für Rechenzentren ein positiver und bedeutender Standortfaktor. Touristisch betrachtet bietet die Region eine interessante Industriekultur.</p>
+      <p>Wirtschaftliche Schwächen sind hingegen die unterdurchschnittliche Kaufkraft und die Deindustrialisierung, die in Deutschland unter anderem auf eine immer schlechtere Position im internationalen Vergleich zurückzuführen ist. Darüber hinaus war und ist das Ruhrgebiet aufgrund intensiver Förderungen ein sehr kostenintensiver Wirtschaftsraum. Zudem befindet sich der Maschinenbau in Deutschland laut dem Branchengipfel in Berlin im November 2026 in seinem vierten Krisenjahr. Ein Ausbau der KI-Infrastruktur könne dabei helfen, aus der Krise herauszukommen. Hier könnte das Ruhrgebiet mit seinen Flüssen, Start-ups, der ausgebauten Bildungslandschaft und seinen Brachflächen ansetzen und vom Ausbau von Rechenzentren wirtschaftlich profitieren.</p>
+    </details>
   </div>
 </section>
 

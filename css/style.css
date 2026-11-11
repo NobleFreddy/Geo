@@ -652,3 +652,75 @@ main { overflow-x: clip; }
 .unimap g text, .unimap text.pin { font-size: 15px; }
 [tabindex="-1"]:focus { outline: none; }
 @media (max-width: 599px) { #btnPresent, [data-action="present"] { display: none; } }
+
+/* ---------- Leitfrage: KI-Puzzle ---------- */
+.tag--rot { background: #b0412c; color: #fff; }
+.puzzle {
+  display: grid; gap: 14px; margin-top: 8px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "a b" "core core" "c d";
+}
+@media (min-width: 760px) {
+  .puzzle { grid-template-columns: 1fr 1.15fr 1fr; grid-template-areas: "a core b" "c core d"; }
+}
+.puzzle__slot[data-slot="fluesse"] { grid-area: a; }
+.puzzle__slot[data-slot="startups"] { grid-area: b; }
+.puzzle__slot[data-slot="bildung"] { grid-area: c; }
+.puzzle__slot[data-slot="brachen"] { grid-area: d; }
+.puzzle__core { grid-area: core; }
+.puzzle__slot {
+  position: relative; min-height: 112px; border-radius: 16px; border: 3px dashed rgba(0,0,0,.2);
+  background: rgba(255,255,255,.55); display: grid; place-items: center; text-align: center; padding: 12px;
+  transition: border-color .3s, background .3s;
+}
+.puzzle__ph { font-family: var(--font-head); font-size: 2rem; color: rgba(0,0,0,.2); }
+.puzzle__fill { display: none; }
+.puzzle__slot.is-filled { border-style: solid; border-color: #2a6e96; background: #fff; box-shadow: 0 6px 18px rgba(30,60,90,.12); animation: popIn .5s cubic-bezier(.3, 1.6, .5, 1); }
+.puzzle__slot.is-filled .puzzle__ph { display: none; }
+.puzzle__slot.is-filled .puzzle__fill { display: grid; gap: 4px; }
+.puzzle__fill b { font-family: var(--font-head); font-size: 1.15rem; }
+.puzzle__fill small { font-size: .88rem; opacity: .8; }
+@keyframes popIn { from { transform: scale(.6); opacity: 0; } }
+.puzzle__core {
+  border-radius: 20px; padding: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  background: #1f2a30; color: #9fb4c0; text-align: center; transition: background .5s, color .5s, box-shadow .5s;
+}
+.puzzle__icon { width: 70px; height: auto; margin-bottom: 6px; }
+.puzzle__core b { font-family: var(--font-head); font-size: 1.35rem; color: #fff; }
+.puzzle__core small { margin-top: 6px; opacity: .8; }
+.puzzle__core.is-complete { background: linear-gradient(135deg, #1d5f86, #2f7a4d); color: #fff; box-shadow: 0 0 0 4px rgba(127,227,255,.5), 0 10px 40px rgba(47,122,77,.45); }
+.puzzle__core.is-complete .puzzle__icon { animation: pulse 1.6s ease-in-out infinite; }
+.puzzle__tray { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.station--light .puzzle__tray .btn { background: #fff; border-color: rgba(0,0,0,.15); color: var(--dunkeltext); }
+.station--light .puzzle__tray .btn:hover { background: #eef6ff; }
+.puzzle__msg { min-height: 1.6em; margin-top: 12px; font-weight: 700; color: #1d5f86; }
+
+/* ---------- Leitfrage: Urteils-Ampel ---------- */
+.urteil-grid { display: grid; gap: 20px; align-items: start; }
+@media (min-width: 820px) { .urteil-grid { grid-template-columns: minmax(260px, .8fr) 1.2fr; } }
+.ampel-card { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.ampel { display: flex; gap: 16px; align-items: flex-start; }
+.ampel__box { display: grid; gap: 12px; padding: 14px; border-radius: 24px; background: #26231f; box-shadow: inset 0 0 0 3px #3a3530; }
+.ampel__light { display: block; width: 62px; height: 62px; border-radius: 50%; transition: background .25s, box-shadow .25s; }
+.ampel__light--rot { background: #4a2420; }
+.ampel__light--gelb { background: #4a3d1c; }
+.ampel__light--gruen { background: #1f3a28; }
+.ampel[data-on="rot"] .ampel__light--rot { background: #ff4d3d; box-shadow: 0 0 28px #ff4d3d; }
+.ampel[data-on="gelb"] .ampel__light--gelb { background: #ffc531; box-shadow: 0 0 32px #ffc531; }
+.ampel[data-on="gruen"] .ampel__light--gruen { background: #3ddc6f; box-shadow: 0 0 28px #3ddc6f; }
+.ampel__labels { list-style: none; margin: 0; padding: 14px 0 0; display: grid; gap: 12px; }
+.ampel__labels li { height: 62px; margin: 0; display: flex; align-items: center; font-family: var(--font-head); font-size: 1.05rem; opacity: .45; transition: opacity .3s; }
+.ampel[data-on="rot"] li[data-l="rot"], .ampel[data-on="gelb"] li[data-l="gelb"], .ampel[data-on="gruen"] li[data-l="gruen"] { opacity: 1; font-weight: 700; }
+.ampel.is-final li[data-l="gelb"] { font-size: 1.25rem; color: #8a5a00; }
+.urteil h3 { font-size: 1.6rem; }
+.urteil__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.urteil__list li { margin: 0; }
+#unserUrteil:not([hidden]) { animation: fadeUp .6s; }
+.fazit-text { margin-top: 22px; border-radius: 14px; padding: 12px 18px; background: rgba(255,255,255,.7); border: 1px solid rgba(0,0,0,.1); }
+.fazit-text summary { cursor: pointer; font-family: var(--font-head); font-size: 1.1rem; }
+.fazit-text p { margin: .8em 0 0; max-width: 75ch; }
+
+/* Mögliches Zukunfts-Standbein am Tausendfüßler */
+.bf-leg--future path, .bf-leg--future ellipse { stroke-dasharray: 4 3; }
+.bf-leg--future { opacity: .9; }
+.bf-leg--future ellipse { fill: none; stroke: #7fe3ff; stroke-width: 2; }

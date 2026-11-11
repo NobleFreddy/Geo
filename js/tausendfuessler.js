@@ -15,7 +15,9 @@
     { key: 'phase3',    section: 'ausfahrt1', name: 'Reindustrialisierung · Phase 3', color: '#ffe08a', legs: ['Neue Technologien'] },
     { key: 'tertiaer',  section: 'ausfahrt2', name: 'Tertiärisierung',                color: '#5fb0dc', legs: ['IT', 'Logistik', 'Dienstleistungen'] },
     { key: 'forschung', section: 'ausfahrt3', name: 'Bildung & Forschung',            color: '#b9a2ea', legs: ['Forschung', 'Umwelttechnologie', 'Biomedizin'] },
-    { key: 'iba',       section: 'ausfahrt4', name: 'IBA Emscher Park',               color: '#69c08a', legs: ['Industriekultur & Tourismus'] }
+    { key: 'iba',       section: 'ausfahrt4', name: 'IBA Emscher Park',               color: '#69c08a', legs: ['Industriekultur & Tourismus'] },
+    // wächst nur, wenn das KI-Puzzle in der Leitfrage gelöst wird
+    { key: 'zukunft',   section: 'leitfrage', name: 'Mögliches Zukunfts-Standbein',   color: '#7fe3ff', legs: ['KI & Rechenzentren?'], future: true }
   ];
 
   var SPACING = 30;
@@ -29,7 +31,7 @@
     GROUPS.forEach(function (g) {
       if (keys.indexOf(g.key) === -1) return;
       g.legs.forEach(function (label, i) {
-        out.push({ id: g.key + '-' + i, label: label, color: g.color, group: g.key });
+        out.push({ id: g.key + '-' + i, label: label, color: g.color, group: g.key, future: !!g.future });
       });
     });
     return out;
@@ -53,7 +55,7 @@
     var html = '<g class="bf-legs">';
     legs.forEach(function (leg, i) {
       var x = 30 + i * SPACING;
-      var cls = 'bf-leg' + (leg.group === 'montan' ? ' bf-leg--montan' : '') + (leg.group === newGroup ? ' is-new' : '');
+      var cls = 'bf-leg' + (leg.group === 'montan' ? ' bf-leg--montan' : '') + (leg.future ? ' bf-leg--future' : '') + (leg.group === newGroup ? ' is-new' : '');
       html += '<g class="' + cls + '" data-id="' + leg.id + '"><g class="bf-swing" style="--i:' + i + '">' +
         '<title>' + esc(leg.label) + '</title>' +
         '<path d="M' + x + ' 30 L' + (x - 6) + ' 52 L' + (x + 2) + ' 68" fill="none" stroke="' + leg.color + '" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>' +
@@ -82,7 +84,7 @@
     els.svg.style.width = Math.round(width * 70 / 76) + 'px';
     els.svg.classList.toggle('is-krise', state === 'krise');
     els.svg.classList.toggle('is-weak', state === 'weak');
-    els.count.textContent = legs.length;
+    els.count.textContent = legs.filter(function (l) { return !l.future; }).length;
     renderPanel();
   }
 
@@ -93,12 +95,13 @@
       html += '<p class="bug__group">' + esc(g.name) + '</p><ul>';
       g.legs.forEach(function (label) {
         var weak = g.key === 'montan' && state === 'weak';
+        var note = weak ? ' <span class="muted">(hat an Bedeutung verloren)</span>' : (g.future ? ' <span class="muted">(könnte ein neues Standbein werden)</span>' : '');
         html += '<li' + (weak ? ' class="is-weak"' : '') + '><span class="bug__dot" style="background:' + g.color + '"></span>' +
-          esc(label) + (weak ? ' <span class="muted">(hat an Bedeutung verloren)</span>' : '') + '</li>';
+          esc(label) + note + '</li>';
       });
       html += '</ul>';
     });
-    var missing = GROUPS.length - grown.length;
+    var missing = GROUPS.filter(function (g) { return !g.future && grown.indexOf(g.key) === -1; }).length;
     if (missing > 0) html += '<p class="muted" style="margin:10px 0 0">Weiter ausfahren – es wachsen noch mehr Beine!</p>';
     els.list.innerHTML = html;
   }

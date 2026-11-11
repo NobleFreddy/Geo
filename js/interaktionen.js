@@ -384,7 +384,7 @@
     var svg = $('#bigBug');
     var T = Bug();
     if (!svg || !T) return;
-    var all = T.legsFor(T.GROUPS.map(function (g) { return g.key; }));
+    var all = T.legsFor(T.GROUPS.filter(function (g) { return !g.future; }).map(function (g) { return g.key; }));
     var msg = $('#bigBugMsg');
     var removeBtn = $('#bigBugRemove');
     T.render(svg, all, null);
@@ -467,7 +467,9 @@
       else if (p > c) t = 'Die Waage neigt sich zu: eher zukunftsfähig (' + p + ' : ' + c + ')';
       else if (c > p) t = 'Die Waage neigt sich zu: eher nicht zukunftsfähig (' + p + ' : ' + c + ')';
       else t = 'Die Waage ist im Gleichgewicht (' + p + ' : ' + c + ')';
-      if (p + c === total) t += ' – Tipp: Nicht nur die Anzahl zählt. Wie schwer wiegt jedes Argument?';
+      var asOurs = $$('.arg', root).every(function (li) { return zoneOf(li) === li.getAttribute('data-side'); });
+      if (asOurs) t = 'Unsere Einordnung: ' + p + ' Stärken, ' + c + ' Schwächen – trotzdem lautet unser Urteil nur „bedingt zukunftsfähig“ (siehe unten).';
+      else if (p + c === total) t += ' – Tipp: Nicht nur die Anzahl zählt. Wie schwer wiegt jedes Argument?';
       result.textContent = t;
       save();
     }
@@ -479,7 +481,7 @@
     function save() {
       var state = {};
       $$('.arg', root).forEach(function (li) { state[li.getAttribute('data-id')] = zoneOf(li); });
-      store('ruhr-waage', JSON.stringify(state));
+      store('ruhr-waage-2', JSON.stringify(state));
     }
 
     // Drag & Drop (Maus); auf Touch-Geräten helfen die Knöpfe
@@ -518,10 +520,20 @@
       $$('.arg', root).forEach(function (li) { lists.pool.appendChild(li); buttons(li); });
       update();
     });
+    var ours = $('#waageOurs');
+    if (ours) {
+      ours.addEventListener('click', function () {
+        $$('.arg', root).forEach(function (li) {
+          var side = li.getAttribute('data-side');
+          if (lists[side]) { lists[side].appendChild(li); buttons(li); }
+        });
+        update();
+      });
+    }
 
     // Gespeicherten Stand wiederherstellen (nur in diesem Browser)
     try {
-      var saved = JSON.parse(store('ruhr-waage') || '{}');
+      var saved = JSON.parse(store('ruhr-waage-2') || '{}');
       Object.keys(saved).forEach(function (id) {
         var li = $('.arg[data-id="' + id + '"]', root);
         if (li && lists[saved[id]] && saved[id] !== 'pool') { lists[saved[id]].appendChild(li); buttons(li); }
@@ -536,10 +548,80 @@
     update();
   }
 
+  /* ---------- Leitfrage: KI-Puzzle ---------- */
+  function initPuzzle() {
+    var root = $('#puzzle');
+    if (!root) return;
+    var core = $('#puzzleCore'), count = $('#puzzleCount'), msg = $('#puzzleMsg'), reset = $('#puzzleReset');
+    var pieces = $$('#puzzleTray [data-piece]');
+    var total = pieces.length;
+
+    function placed() { return $$('.puzzle__slot.is-filled', root).length; }
+    function refresh() {
+      var n = placed();
+      count.textContent = n + ' / ' + total + ' Bausteine';
+      var done = n === total;
+      core.classList.toggle('is-complete', done);
+      reset.hidden = n === 0;
+      if (done) {
+        msg.textContent = 'Das Ruhrgebiet könnte vom Ausbau von Rechenzentren wirtschaftlich profitieren – ein mögliches neues Standbein für den Tausendfüßler!';
+        if (Bug()) Bug().grow('zukunft');
+      } else {
+        msg.textContent = '';
+      }
+    }
+    pieces.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var slot = $('.puzzle__slot[data-slot="' + btn.getAttribute('data-piece') + '"]', root);
+        if (slot) slot.classList.add('is-filled');
+        btn.hidden = true;
+        refresh();
+      });
+    });
+    reset.addEventListener('click', function () {
+      $$('.puzzle__slot', root).forEach(function (s) { s.classList.remove('is-filled'); });
+      pieces.forEach(function (b) { b.hidden = false; });
+      refresh();
+    });
+    refresh();
+  }
+
+  /* ---------- Leitfrage: Urteils-Ampel ---------- */
+  function initAmpel() {
+    var ampel = $('#ampel');
+    if (!ampel) return;
+    var btn = $('#ampelBtn'), box = $('#unserUrteil');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    btn.addEventListener('click', function () {
+      if (ampel.classList.contains('is-final')) {
+        // zurücksetzen
+        ampel.classList.remove('is-final');
+        ampel.removeAttribute('data-on');
+        box.hidden = true;
+        btn.textContent = 'Urteil aufdecken';
+        return;
+      }
+      btn.disabled = true;
+      var seq = reduce ? ['gelb'] : ['rot', 'gruen', 'rot', 'gruen', 'gelb'];
+      seq.forEach(function (color, i) {
+        setTimeout(function () {
+          ampel.setAttribute('data-on', color);
+          if (i === seq.length - 1) {
+            ampel.classList.add('is-final');
+            box.hidden = false;
+            btn.disabled = false;
+            btn.textContent = '↺ Ampel zurücksetzen';
+          }
+        }, i * 380);
+      });
+    });
+  }
+
   window.Interaktionen = {
     init: function () {
       [initWackel, initWirkung, initLamp, initSenkung, initZeit, initSektor, initUni, initCounter,
-        initIba, initCompare, initRangeFill, initFlip, initBigBug, initWaage].forEach(function (fn) {
+        initIba, initCompare, initRangeFill, initFlip, initBigBug, initWaage, initPuzzle, initAmpel].forEach(function (fn) {
         try { fn(); } catch (err) { if (window.console) console.error(fn.name, err); }
       });
     }
